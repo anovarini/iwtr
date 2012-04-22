@@ -1,0 +1,44 @@
+/**
+ * Copyright 2012 Alessandro Novarini
+ *
+ * This file is part of the iwtr project.
+ *
+ * Iwtr is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+apply plugin: 'groovy'
+apply plugin: 'maven'
+apply plugin: 'idea'
+
+compileJava.enabled = false
+compileTestJava.enabled = false
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    groovy(
+            [group: 'org.codehaus.groovy', name: 'groovy', version: '1.8.6'],
+    )
+    compile(
+            [group: 'com.tinkerpop.gremlin', name: 'gremlin-groovy', version: '1.5'],
+            [group: 'com.tinkerpop.blueprints', name: 'blueprints-neo4j-graph', version: '1.2'],
+            [group: 'commons-cli', name: 'commons-cli', version: '1.2'],
+    )
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.0-rc-1'
+}
