@@ -1,4 +1,3 @@
-package spikes
 /**
  * Copyright 2012 Alessandro Novarini
  *
@@ -16,7 +15,9 @@ package spikes
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
+
+package spikes
 
 import com.tinkerpop.gremlin.groovy.Gremlin
 import com.tinkerpop.blueprints.pgm.impls.neo4j.Neo4jGraph

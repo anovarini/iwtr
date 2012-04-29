@@ -35,29 +35,24 @@ class DumpDependencies {
 
         try {
             dumpDependencies.init()
-            dumpDependencies.findFirstLevelOfDependenciesOn('hermes-hotel-api')
+            dumpDependencies.printDependenciesOn('hermes-hotel-api')
         }
         finally {
             dumpDependencies.shutdown()
         }
     }
 
-    void findFirstLevelOfDependenciesOn(String s) {
+    void printDependenciesOn(String s) {
         def module = g.V.filter {it.name == s }.next()
 
-        def dependencyLevels = [:]
-        def currentLevel = 0
+        def dependencyLevels = [(module.name):1]
 
-        def dependencies
-        while ((dependencies = module.in.loop(1) { it.loops <= currentLevel }.name.dedup).hasNext()) {
-            dependencies.each {
-                dependencyLevels[it]=currentLevel
-            }
-            currentLevel++
-        }
+        module.in.loop(1) {
+            dependencyLevels[it.object.name] = it.loops
+            true
+        }.each {}
 
         def modulesGroupedByLevel = dependencyLevels.groupBy { it.value }.sort { it.key }
-        println modulesGroupedByLevel
 
         modulesGroupedByLevel.each {
             modulesGroupedByLevel[it.key] = it.value.collect {it.key}
@@ -79,12 +74,5 @@ class DumpDependencies {
 
     void shutdown() {
         g.shutdown()
-    }
-
-    def dumpNodes() {
-        g.V.toList().each {
-            println it.name
-            it.outE('depends_on').inV.toList().each {println "-> $it.name"}
-        }
     }
 }
