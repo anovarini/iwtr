@@ -48,3 +48,5 @@ dependencies {
 task wrapper(type: Wrapper) {
     gradleVersion = '1.0-rc-1'
 }
+
+mainClassName = "com.iwtr.Main"
