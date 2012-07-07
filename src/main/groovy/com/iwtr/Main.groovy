@@ -19,42 +19,11 @@
 
 package com.iwtr
 
-import org.apache.commons.cli.Option
-import org.apache.commons.cli.Options
-import org.apache.commons.cli.PosixParser
-import org.apache.commons.cli.CommandLineParser
-import org.apache.commons.cli.CommandLine
-import org.apache.commons.cli.HelpFormatter
-import org.apache.commons.cli.OptionBuilder
-import org.apache.commons.cli.ParseException
+def cli = new CliBuilder(usage:'ls <project location>')
+cli.a('display all files')
+cli.l('use a long listing format')
+cli.t('sort by modification time')
+def options = cli.parse(args)
+assert options // would be null (false) on failure
 
-def options = buildCommand()
-
-CommandLineParser parser = new PosixParser()
-CommandLine cmd = null
-
-try {
-    cmd = parser.parse(options, args)
-
-    0 == args.length ? printHelp(options) : executeCommands(cmd)
-
-} catch (ParseException exception) {
-    printHelp options
-}
-
-void printHelp(Options options) {
-    HelpFormatter formatter = new HelpFormatter()
-    formatter.printHelp 'iwtr', options, true
-}
-
-void executeCommands(CommandLine cmd) {
-    cmd.argList.each { println it }
-}
-
-Options buildCommand() {
-    Options options = new Options()
-    options.addOption OptionBuilder.withArgName('dir').hasArg().withDescription('specify the data directory').create('data')
-    options.addOption OptionBuilder.withArgName('dir').hasArg().withDescription('specify the root project directory').isRequired().create('root')
-    options.addOption OptionBuilder.withArgName('name').hasArg().withDescription('specify the module name to release').isRequired().create('module')
-    options.addOption OptionBuilder.withArgName('type').hasArg().withDescription('specify the dependency manager').create('manager')
-}
+cli.usage()

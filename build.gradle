@@ -32,7 +32,7 @@ repositories {
 
 dependencies {
     groovy(
-            [group: 'org.codehaus.groovy', name: 'groovy', version: '1.8.6'],
+            [group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.0.0'],
     )
     compile(
             [group: 'com.tinkerpop.gremlin', name: 'gremlin-groovy', version: '1.5'],
@@ -45,7 +45,7 @@ dependencies {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '1.0-rc-1'
+    gradleVersion = '1.0'
 }
 
 mainClassName = "com.iwtr.Main"
